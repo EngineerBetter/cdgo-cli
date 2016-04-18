@@ -6,6 +6,6 @@ type NestedDirectoryFinder interface {
 
 type Thing struct{}
 
-func (*Thing) find(directory string, in string) string {
+func (*Thing) Find(directory string, in string) string {
 	return "foo"
 }

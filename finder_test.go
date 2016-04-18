@@ -12,4 +12,11 @@ var _ = Describe("finder", func() {
 		finder := new(Thing)
 		Ω(finder).NotTo(BeNil())
 	})
+
+	Describe("find", func() {
+		It("can be invoked", func() {
+			finder := new(Thing)
+			Ω(finder.Find("a", "b")).To(Equal("bar"))
+		})
+	})
 })

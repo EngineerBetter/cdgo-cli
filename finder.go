@@ -1,4 +1,4 @@
-package finder
+package main
 
 type NestedDirectoryFinder interface {
 	find(directory string, in string) string

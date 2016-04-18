@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/EngineerBetter/goTo"
+	. "github.com/EngineerBetter/goto"
 )
 
 var _ = Describe("finder", func() {

@@ -1,10 +1,12 @@
 package main_test
 
 import (
+	. "github.com/EngineerBetter/goto"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/EngineerBetter/goto"
+	"os"
+	"path/filepath"
 )
 
 var _ = Describe("finder", func() {
@@ -16,9 +18,13 @@ var _ = Describe("finder", func() {
 	})
 
 	Describe("find", func() {
-		It("can be invoked", func() {
-			finder := new(RecursiveFinder)
-			Ω(finder.Find("a", "b")).To(Equal("bar"))
+		Context("when the starting directory does not exist", func() {
+			It("returns an error", func() {
+				cwd, err := os.Getwd()
+				startDir := filepath.Join(cwd, "not-exist")
+				_, err = finder.Find("needle", startDir)
+				Ω(err).NotTo(BeNil(), "should err")
+			})
 		})
 	})
 })

@@ -17,7 +17,7 @@ var _ = Describe("finder", func() {
 
 	BeforeEach(func() {
 		finder = new(RecursiveFinder)
-		Ω(finder).NotTo(BeNil())
+		Ω(finder).ShouldNot(BeNil())
 		cwd, _ = os.Getwd()
 	})
 
@@ -26,7 +26,7 @@ var _ = Describe("finder", func() {
 			It("returns an error", func() {
 				startDir := filepath.Join(cwd, "not-exist")
 				_, err := finder.Find("needle", startDir)
-				Ω(err).NotTo(BeNil(), "Error should be returned for non-existant directory")
+				Ω(err).ShouldNot(BeNil(), "Error should be returned for non-existant directory")
 			})
 		})
 
@@ -35,8 +35,8 @@ var _ = Describe("finder", func() {
 				It("returns the absolute path to the directory", func() {
 					startDir := filepath.Join(cwd, "test-fixtures")
 					result, err := finder.Find("root", startDir)
-					Ω(err).To(BeNil())
-					Ω(result).To(Equal(cwd + "/test-fixtures/root"))
+					Ω(err).Should(BeNil())
+					Ω(result).Should(Equal(cwd + "/test-fixtures/root"))
 				})
 			})
 
@@ -44,7 +44,7 @@ var _ = Describe("finder", func() {
 				It("errs", func() {
 					startDir := filepath.Join(cwd, "test-fixtures")
 					_, err := finder.Find("snozzwangles", startDir)
-					Ω(err).ToNot(BeNil())
+					Ω(err).ShouldNot(BeNil())
 				})
 			})
 		})

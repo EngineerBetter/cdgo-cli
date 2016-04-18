@@ -8,14 +8,16 @@ import (
 )
 
 var _ = Describe("finder", func() {
-	It("can be instantiated", func() {
-		finder := new(Thing)
+	var finder DirectoryFinder
+
+	BeforeEach(func() {
+		finder = new(RecursiveFinder)
 		Ω(finder).NotTo(BeNil())
 	})
 
 	Describe("find", func() {
 		It("can be invoked", func() {
-			finder := new(Thing)
+			finder := new(RecursiveFinder)
 			Ω(finder.Find("a", "b")).To(Equal("bar"))
 		})
 	})

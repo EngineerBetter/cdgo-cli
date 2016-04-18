@@ -1,11 +1,11 @@
 package main
 
-type NestedDirectoryFinder interface {
-	find(directory string, in string) string
+type DirectoryFinder interface {
+	Find(directory string, in string) (string, error)
 }
 
-type Thing struct{}
+type RecursiveFinder struct{}
 
-func (*Thing) Find(directory string, in string) string {
-	return "foo"
+func (*RecursiveFinder) Find(needle string, haystack string) (string, error) {
+	return "foo", nil
 }

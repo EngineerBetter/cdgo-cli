@@ -26,7 +26,8 @@ var _ = Describe("goto", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 		homeDir = usr.HomeDir
 		testDir = filepath.Join(homeDir, "workspace", "goto-test-dir")
-		os.Mkdir(testDir, os.ModeDir)
+		err = os.Mkdir(testDir, os.ModeDir)
+		Ω(err).Should(HaveOccurred())
 	})
 
 	AfterSuite(func() {

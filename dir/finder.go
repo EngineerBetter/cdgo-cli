@@ -1,6 +1,7 @@
 package dir
 
 import "errors"
+import "io"
 import "os"
 import "path/filepath"
 
@@ -22,7 +23,7 @@ func (*RecursiveFinder) Find(needle string, haystack string) (result string, err
 	filepath.Walk(haystack, func(path string, fi os.FileInfo, errIn error) (errOut error) {
 		if fi.Name() == needle {
 			result = path
-			return filepath.SkipDir
+			return io.EOF
 		}
 
 		return

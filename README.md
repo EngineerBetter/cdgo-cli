@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/EngineerBetter/goto.svg?branch=master)](https://travis-ci.org/EngineerBetter/goto)
 
-Makes it easier to `cd` between projects in `$GOPATH` and `~/workspace/`.
+`cd`s to nested directories in either `$GOPATH` and `~/workspace/`, in order to make it easier to find things.
 
 ## To use
 
@@ -24,4 +24,6 @@ function cdwork {
 * `cdgo some-project`
 * `cdwork some-other-project`
 
-Inspired by [Pivotal's Bash functions](https://github.com/cloudfoundry-incubator/garden-linux/wiki/Garden-development-workstation-setup).
+Directories are listed lexicographically, and each level of the directory tree is searched before descending. This means higher-level results are favoured, reducing the likelihood of `cd`ing into a submodule or vendored dependency.
+
+Inspired by [Pivotal's Bash functions](https://github.com/cloudfoundry-incubator/garden-linux/wiki/Garden-development-workstation-setup), but hopefully a bit faster.

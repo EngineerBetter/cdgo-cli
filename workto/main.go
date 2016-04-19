@@ -1,11 +1,13 @@
 package main
 
-import "github.com/EngineerBetter/goto/dir"
-import "os"
-import "os/user"
-import "path/filepath"
-import "fmt"
-import "log"
+import (
+	"fmt"
+	"github.com/EngineerBetter/goto/dir"
+	"log"
+	"os"
+	"os/user"
+	"path/filepath"
+)
 
 func main() {
 	if len(os.Args) < 2 {

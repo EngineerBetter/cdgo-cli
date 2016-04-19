@@ -1,9 +1,11 @@
 package dir
 
-import "errors"
-import "os"
-import "path/filepath"
-import "sort"
+import (
+	"errors"
+	"os"
+	"path/filepath"
+	"sort"
+)
 
 func Find(needle string, haystack string) (result string, errOut error) {
 	fi, err := os.Lstat(haystack)

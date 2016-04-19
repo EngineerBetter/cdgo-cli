@@ -1,10 +1,12 @@
 package main
 
-import "github.com/EngineerBetter/goto/dir"
-import "os"
-import "path/filepath"
-import "fmt"
-import "log"
+import (
+	"fmt"
+	"github.com/EngineerBetter/goto/dir"
+	"log"
+	"os"
+	"path/filepath"
+)
 
 func main() {
 	gopath := os.Getenv("GOPATH")

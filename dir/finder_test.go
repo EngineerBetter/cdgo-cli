@@ -32,7 +32,7 @@ var _ = Describe("finder", func() {
 
 		Context("when the starting directory exists", func() {
 			Context("and the target directory exists", func() {
-				It("returns the absolute path to the directory", func() {
+				It("returns the absolute path to the highest matching directory", func() {
 					startDir := filepath.Join(cwd, "test-fixtures")
 					result, err := finder.Find("root", startDir)
 					Ω(err).Should(BeNil())

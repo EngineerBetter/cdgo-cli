@@ -35,7 +35,7 @@ var _ = Describe("goto", func() {
 		command := exec.Command(cliPath, "bosh-lite")
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
-		Eventually(session).Should(Exit())
+		Eventually(session, "5s").Should(Exit())
 
 		expectedOutput := filepath.Join("/Users/deejay/workspace/bosh-lite")
 

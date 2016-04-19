@@ -1,7 +1,7 @@
 package dir_test
 
 import (
-	. "github.com/EngineerBetter/goto/dir"
+	"github.com/EngineerBetter/goto/dir"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -11,13 +11,10 @@ import (
 
 var _ = Describe("finder", func() {
 	var (
-		cwd    string
-		finder DirectoryFinder
+		cwd string
 	)
 
 	BeforeEach(func() {
-		finder = new(RecursiveFinder)
-		Ω(finder).ShouldNot(BeNil())
 		cwd, _ = os.Getwd()
 	})
 
@@ -25,7 +22,7 @@ var _ = Describe("finder", func() {
 		Context("when the starting directory does not exist", func() {
 			It("returns an error", func() {
 				startDir := filepath.Join(cwd, "not-exist")
-				_, err := finder.Find("needle", startDir)
+				_, err := dir.Find("needle", startDir)
 				Ω(err).ShouldNot(BeNil(), "Error should be returned for non-existant directory")
 			})
 		})
@@ -34,7 +31,7 @@ var _ = Describe("finder", func() {
 			Context("and the target directory exists", func() {
 				It("returns the absolute path to the highest matching directory", func() {
 					startDir := filepath.Join(cwd, "test-fixtures")
-					result, err := finder.Find("root", startDir)
+					result, err := dir.Find("root", startDir)
 					Ω(err).Should(BeNil())
 					Ω(result).Should(Equal(cwd + "/test-fixtures/root"))
 				})
@@ -43,7 +40,7 @@ var _ = Describe("finder", func() {
 			Context("but the target directory does not exist", func() {
 				It("errs", func() {
 					startDir := filepath.Join(cwd, "test-fixtures")
-					_, err := finder.Find("snozzwangles", startDir)
+					_, err := dir.Find("snozzwangles", startDir)
 					Ω(err).ShouldNot(BeNil())
 				})
 			})

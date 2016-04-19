@@ -1,6 +1,6 @@
 package main
 
-import . "github.com/EngineerBetter/goto/dir"
+import "github.com/EngineerBetter/goto/dir"
 import "os"
 import "path/filepath"
 import "fmt"
@@ -20,8 +20,7 @@ func main() {
 	}
 	needle := os.Args[1]
 
-	finder := new(RecursiveFinder)
-	result, err := finder.Find(needle, haystack)
+	result, err := dir.Find(needle, haystack)
 
 	if err != nil {
 		log.Fatal(err)

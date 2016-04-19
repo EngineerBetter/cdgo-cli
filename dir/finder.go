@@ -5,15 +5,7 @@ import "os"
 import "path/filepath"
 import "sort"
 
-type DirectoryFinder interface {
-	Find(directory string, in string) (string, error)
-}
-
-type WalkSearchFunc func(path string, info os.FileInfo, err error) (string, error)
-
-type RecursiveFinder struct{}
-
-func (finder *RecursiveFinder) Find(needle string, haystack string) (result string, errOut error) {
+func Find(needle string, haystack string) (result string, errOut error) {
 	fi, err := os.Lstat(haystack)
 
 	if err != nil {

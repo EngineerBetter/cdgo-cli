@@ -6,7 +6,9 @@ import (
 	. "github.com/onsi/gomega/gbytes"
 	. "github.com/onsi/gomega/gexec"
 
+	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 var _ = Describe("goto", func() {
@@ -28,5 +30,19 @@ var _ = Describe("goto", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit(1))
 		Ω(session.Out).Should(Say("directory to look for was not specified"))
+	})
+
+	It("finds this directory", func() {
+		gopath := os.Getenv("GOPATH")
+		Ω(gopath).ShouldNot(BeZero())
+
+		command := exec.Command(cliPath, "goto")
+		session, err := Start(command, GinkgoWriter, GinkgoWriter)
+		Ω(err).ShouldNot(HaveOccurred())
+		Eventually(session).Should(Exit())
+
+		expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/goto")
+
+		Ω(session.Out).Should(Say(expectedOutput))
 	})
 })

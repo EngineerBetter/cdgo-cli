@@ -28,10 +28,10 @@ var _ = Describe("goto", func() {
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit(1))
-		Ω(session.Out).Should(Say("directory to look for was not specified"))
+		Ω(session.Err).Should(Say("directory to look for was not specified"))
 	})
 
-	It("finds this directory", func() {
+	It("finds the given directory", func() {
 		command := exec.Command(cliPath, "bosh-lite")
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())

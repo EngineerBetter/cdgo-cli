@@ -31,5 +31,7 @@ func getAbsoluteWorkspace() (dir string, err error) {
 }
 
 func printAndBombIfOccurred(err error) {
-	log.Fatal(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

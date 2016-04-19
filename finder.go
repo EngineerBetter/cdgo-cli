@@ -29,7 +29,7 @@ func (*RecursiveFinder) Find(needle string, haystack string) (result string, err
 	})
 
 	if result == "" {
-		errOut = errors.New(needle + "not found in " + haystack)
+		errOut = errors.New(needle + " not found in " + haystack)
 	}
 
 	return

@@ -6,21 +6,32 @@ import (
 	. "github.com/onsi/gomega/gbytes"
 	. "github.com/onsi/gomega/gexec"
 
+	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 )
 
 var _ = Describe("goto", func() {
 	var cliPath string
+	var homeDir string
+	var testDir string
 
 	BeforeSuite(func() {
 		var err error
 		cliPath, err = Build("github.com/EngineerBetter/goto/workto")
 		Ω(err).ShouldNot(HaveOccurred())
+
+		usr, err := user.Current()
+		Ω(err).ShouldNot(HaveOccurred())
+		homeDir = usr.HomeDir
+		testDir = filepath.Join(homeDir, "workspace", "goto-test-dir")
+		os.Mkdir(testDir, os.ModeDir)
 	})
 
 	AfterSuite(func() {
 		CleanupBuildArtifacts()
+		os.Remove(testDir)
 	})
 
 	It("requires an argument", func() {
@@ -31,14 +42,13 @@ var _ = Describe("goto", func() {
 		Ω(session.Err).Should(Say("directory to look for was not specified"))
 	})
 
-	It("finds the given directory", func() {
-		command := exec.Command(cliPath, "bosh-lite")
+	It("finds a test directory", func() {
+		command := exec.Command(cliPath, "goto-test-dir")
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session, "5s").Should(Exit())
 
-		expectedOutput := filepath.Join("/Users/deejay/workspace/bosh-lite")
-
+		expectedOutput := testDir
 		Ω(session.Out).Should(Say(expectedOutput))
 	})
 })

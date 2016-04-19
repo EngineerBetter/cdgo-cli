@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/EngineerBetter/goto/dir"
+	"github.com/EngineerBetter/cdgo/dir"
 	"log"
 	"os"
 	"os/user"

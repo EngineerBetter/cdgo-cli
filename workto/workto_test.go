@@ -19,7 +19,7 @@ var _ = Describe("goto", func() {
 
 	BeforeSuite(func() {
 		var err error
-		cliPath, err = Build("github.com/EngineerBetter/goto/workto")
+		cliPath, err = Build("github.com/EngineerBetter/cdgo/workto")
 		Ω(err).ShouldNot(HaveOccurred())
 
 		usr, err := user.Current()

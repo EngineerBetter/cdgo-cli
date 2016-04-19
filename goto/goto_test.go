@@ -16,7 +16,7 @@ var _ = Describe("goto", func() {
 
 	BeforeSuite(func() {
 		var err error
-		cliPath, err = Build("github.com/EngineerBetter/goto/goto")
+		cliPath, err = Build("github.com/EngineerBetter/cdgo/goto")
 		Ω(err).ShouldNot(HaveOccurred())
 	})
 
@@ -41,7 +41,7 @@ var _ = Describe("goto", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit())
 
-		expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/goto")
+		expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo")
 
 		Ω(session.Out).Should(Say(expectedOutput))
 	})

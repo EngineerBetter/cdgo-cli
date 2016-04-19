@@ -6,8 +6,8 @@
 
 ## To use
 
-* `go get github.com/EngineerBetter/goto/goto`
-* `go get github.com/EngineerBetter/goto/workto`
+* `go get github.com/EngineerBetter/cdgo/goto`
+* `go get github.com/EngineerBetter/cdgo/workto`
 * Wang this in your `.bashrc`:
 
 ```

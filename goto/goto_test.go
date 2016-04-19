@@ -36,7 +36,7 @@ var _ = Describe("goto", func() {
 		gopath := os.Getenv("GOPATH")
 		Ω(gopath).ShouldNot(BeZero())
 
-		command := exec.Command(cliPath, "goto")
+		command := exec.Command(cliPath, "cdgo")
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit())

@@ -1,5 +1,6 @@
 package main
 
+import . "github.com/EngineerBetter/goto/dir"
 import "os"
 import "path/filepath"
 import "fmt"

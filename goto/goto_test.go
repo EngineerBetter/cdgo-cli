@@ -114,10 +114,10 @@ var _ = Describe("goto", func() {
 			functions := `
 # https://github.com/EngineerBetter/cdgo
 function cdgo {
-  cd $(goto go "$@")
+  cd $(goto go -needle="$@")
 }
 function cdwork {
-  cd $(goto work "$@")
+  cd $(goto work -needle="$@")
 }
 `
 			stringAfter := string(bytesAfter[:])

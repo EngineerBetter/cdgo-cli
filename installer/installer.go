@@ -24,10 +24,10 @@ func installBashFunctions(installTo string) error {
 	functions := `
 # https://github.com/EngineerBetter/cdgo
 function cdgo {
-  cd $(goto go "$@")
+  cd $(goto go -needle="$@")
 }
 function cdwork {
-  cd $(goto work "$@")
+  cd $(goto work -needle="$@")
 }
 `
 	if !strings.Contains(installFileContents, functions) {

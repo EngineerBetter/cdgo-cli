@@ -19,8 +19,6 @@
 
 A child process can't change its parent's working directory, so this command appends two Bash functions to the given file. You can provide a different path to `goto -install` if you'd rather not use `.bashrc`.
 
-It also performs `go get github.com/EngineerBetter/cdgo/workto`, which is the underlying workspace-switching command. It felt better to have more Go and less Bash for reasons of testability, hence the choice to not re-use one parameterised tool.
-
 ## Waffle
 
 Directories are listed lexicographically, and each level of the directory tree is searched before descending. This means higher-level results are favoured, reducing the likelihood of `cd`ing into a submodule or vendored dependency.

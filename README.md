@@ -1,6 +1,6 @@
 # cdgo
 
-[![Build Status](https://travis-ci.org/EngineerBetter/goto.svg?branch=master)](https://travis-ci.org/EngineerBetter/goto)
+[![Build Status](https://travis-ci.org/EngineerBetter/cdgo.svg?branch=master)](https://travis-ci.org/EngineerBetter/cdgo)
 
 `cd`s to nested directories in either `$GOPATH` and `~/workspace/`, in order to make it easier to find things.
 

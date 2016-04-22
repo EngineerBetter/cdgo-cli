@@ -1,7 +1,7 @@
 package installer_test
 
 import (
-	"github.com/EngineerBetter/cdgo/goto/installer"
+	"github.com/EngineerBetter/cdgo/installer"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 

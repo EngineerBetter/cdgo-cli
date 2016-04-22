@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/EngineerBetter/cdgo/dir"
-	"github.com/EngineerBetter/cdgo/goto/installer"
+	"github.com/EngineerBetter/cdgo/installer"
 	"os"
 	"path/filepath"
 )

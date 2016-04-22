@@ -7,8 +7,10 @@
 ## To install
 
 * `go get github.com/EngineerBetter/cdgo/goto`
-* `goto -install=~/.bashrc` adds two Bash functions to the `.bashrc` (you can provide another file)
-* `exec bash -l` to start a new session
+* `goto -install=$HOME/.bashrc` adds two Bash functions to the `.bashrc`
+* `exec bash -l` to start a new session and pick up the new functions
+
+You can provide a different path to `goto -install` if you'd rather not use `.bashrc`.
 
 ## To use
 

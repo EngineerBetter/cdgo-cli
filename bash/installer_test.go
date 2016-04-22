@@ -1,7 +1,7 @@
-package installer_test
+package bash_test
 
 import (
-	"github.com/EngineerBetter/cdgo/installer"
+	"github.com/EngineerBetter/cdgo/bash"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-var _ = Describe("installer", func() {
+var _ = Describe("bash", func() {
 	Context("when the file exists", func() {
 		It("adds Bash functions to the specified file", func() {
 			workDir, err := os.Getwd()
@@ -40,7 +40,7 @@ function cdwork {
 }
 `
 
-			err = installer.Install(tempFilePath)
+			err = bash.Install(tempFilePath)
 			Ω(err).ShouldNot(HaveOccurred())
 
 			bytesAfter, err := ioutil.ReadFile(tempFilePath)
@@ -60,15 +60,10 @@ function cdwork {
 			file := filepath.Join(dir, ".bashrc")
 			_, err = os.Stat(file)
 			Ω(err).Should(HaveOccurred())
-			err = installer.Install(file)
+			err = bash.Install(file)
 			Ω(err).ShouldNot(HaveOccurred())
 			_, err = os.Stat(file)
 			Ω(err).ShouldNot(HaveOccurred())
 		})
 	})
-
 })
-
-func assertFileContainsFunctions() {
-
-}

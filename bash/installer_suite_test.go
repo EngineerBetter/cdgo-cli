@@ -1,4 +1,4 @@
-package installer_test
+package bash_test
 
 import (
 	. "github.com/onsi/ginkgo"

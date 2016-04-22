@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/EngineerBetter/cdgo/bash"
 	"github.com/EngineerBetter/cdgo/dir"
-	"github.com/EngineerBetter/cdgo/installer"
 	"os"
 	"path/filepath"
 )
@@ -27,7 +27,7 @@ func main() {
 }
 
 func doInstall(installTo string) {
-	err := installer.Install(installTo)
+	err := bash.Install(installTo)
 	if err != nil {
 		printAndExit(err)
 	}

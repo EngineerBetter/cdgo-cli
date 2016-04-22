@@ -85,6 +85,13 @@ var _ = Describe("goto", func() {
 			expectedOutput := testDir
 			Ω(session.Out).Should(Say(expectedOutput))
 		})
+
+		It("fails if the directory can't be found", func() {
+			command := exec.Command(cliPath, "-haystackType=work", "-needle=does-not-exist")
+			session, err := Start(command, GinkgoWriter, GinkgoWriter)
+			Ω(err).ShouldNot(HaveOccurred())
+			Eventually(session, "30s").Should(Exit(1))
+		})
 	})
 
 	Describe("bash function installation", func() {

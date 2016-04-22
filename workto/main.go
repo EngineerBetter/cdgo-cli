@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/EngineerBetter/cdgo/dir"
-	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -11,7 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		log.Fatal("directory to look for was not specified")
+		printAndExit("directory to look for was not specified")
 	}
 	needle := os.Args[1]
 
@@ -33,6 +32,11 @@ func getAbsoluteWorkspace() (dir string, err error) {
 
 func printAndBombIfOccurred(err error) {
 	if err != nil {
-		log.Fatal(err)
+		printAndExit(err)
 	}
+}
+
+func printAndExit(message interface{}) {
+	fmt.Fprintln(os.Stderr, message)
+	os.Exit(1)
 }

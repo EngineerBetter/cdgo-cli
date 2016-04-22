@@ -104,7 +104,7 @@ var _ = Describe("goto", func() {
 			Eventually(session).Should(Exit(0))
 			Ω(session.Out).Should(Say("Added Bash functions to " + bashRcPath))
 
-			command = exec.Command("bash", "-c", "export PATH=$PATH:. && cd "+cliDir+" && cat .bashrc && source .bashrc && cdgo cdgo && pwd")
+			command = exec.Command("bash", "-c", "export PATH=$PATH:. && cd "+cliDir+" && source .bashrc && cdgo cdgo && pwd")
 			session, err = Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
 			Eventually(session).Should(Exit(0))

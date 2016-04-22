@@ -25,6 +25,7 @@ var _ = Describe("installer", func() {
 		Ω(err).ShouldNot(HaveOccurred())
 		tempFilePath := tempFile.Name()
 		tempFile.Close()
+		defer os.Remove(tempFilePath)
 
 		stringBefore := string(bytesBefore[:])
 

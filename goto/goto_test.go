@@ -90,7 +90,7 @@ var _ = Describe("goto", func() {
 			command := exec.Command(cliPath, "-haystackType=work", "-needle=does-not-exist")
 			session, err := Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
-			Eventually(session, "30s").Should(Exit(1))
+			Eventually(session).Should(Exit(1))
 		})
 	})
 

@@ -2,6 +2,7 @@ package installer
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -15,6 +16,15 @@ func Install(installTo string) error {
 }
 
 func installBashFunctions(installTo string) error {
+	if _, err := os.Stat(installTo); os.IsNotExist(err) {
+		_, err = os.Create(installTo)
+
+		if err != nil {
+			return errors.New("Could not create new file " + installTo)
+		}
+		fmt.Println("Created file " + installTo)
+	}
+
 	installFileBytes, err := ioutil.ReadFile(installTo)
 	if err != nil {
 		return err
@@ -24,10 +34,10 @@ func installBashFunctions(installTo string) error {
 	functions := `
 # https://github.com/EngineerBetter/cdgo
 function cdgo {
-  cd $(goto go -needle="$@")
+  cd $(goto -needle="$@")
 }
 function cdwork {
-  cd $(goto work -needle="$@")
+  cd $(goto -haystackType=work -needle="$@")
 }
 `
 	if !strings.Contains(installFileContents, functions) {

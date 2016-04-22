@@ -6,7 +6,6 @@ import (
 	. "github.com/onsi/gomega/gbytes"
 	. "github.com/onsi/gomega/gexec"
 
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/user"
@@ -96,32 +95,21 @@ var _ = Describe("goto", func() {
 
 	Describe("bash function installation", func() {
 		It("adds the functions to the given file", func() {
-			tempFile, err := ioutil.TempFile("", ".bashrc")
-			Ω(err).ShouldNot(HaveOccurred())
-			tempFilePath := tempFile.Name()
-			tempFile.Close()
-			defer os.Remove(tempFilePath)
+			cliDir := filepath.Dir(cliPath)
 
-			command := exec.Command(cliPath, "-install="+tempFilePath)
+			bashRcPath := filepath.Join(cliDir, ".bashrc")
+			command := exec.Command(cliPath, "-install="+bashRcPath)
 			session, err := Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
 			Eventually(session).Should(Exit(0))
-			Ω(session.Out).Should(Say("Added Bash functions to " + tempFilePath))
+			Ω(session.Out).Should(Say("Added Bash functions to " + bashRcPath))
 
-			bytesAfter, err := ioutil.ReadFile(tempFilePath)
+			command = exec.Command("bash", "-c", "export PATH=$PATH:. && cd "+cliDir+" && cat .bashrc && source .bashrc && cdgo cdgo && pwd")
+			session, err = Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
-
-			functions := `
-# https://github.com/EngineerBetter/cdgo
-function cdgo {
-  cd $(goto go -needle="$@")
-}
-function cdwork {
-  cd $(goto work -needle="$@")
-}
-`
-			stringAfter := string(bytesAfter[:])
-			Ω(stringAfter).Should(ContainSubstring(functions))
+			Eventually(session).Should(Exit(0))
+			expectedDir := filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "EngineerBetter", "cdgo")
+			Ω(session.Out).Should(Say(expectedDir))
 		})
 	})
 })

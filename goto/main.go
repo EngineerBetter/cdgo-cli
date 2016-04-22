@@ -10,38 +10,72 @@ import (
 )
 
 func main() {
+	var installTo, needle, haystackType string
+	flag.StringVar(&installTo, "install", "", "path to install Bash functions to")
+	flag.StringVar(&needle, "needle", "", "directory to find")
+	flag.StringVar(&haystackType, "haystackType", "go", "go/work")
+	flag.Parse()
+
+	if installTo != "" {
+		doInstall(installTo)
+	} else {
+		if needle == "" {
+			printAndExit("-needle must be provided")
+		}
+		doFind(needle, haystackType)
+	}
+}
+
+func doInstall(installTo string) {
+	err := installer.Install(installTo)
+	if err != nil {
+		printAndExit(err)
+	}
+	fmt.Println("Added Bash functions to " + installTo)
+}
+
+func doFind(needle string, haystackType string) {
+	haystack := getHaystack(haystackType)
+	result, err := dir.Find(needle, haystack)
+
+	if err != nil {
+		printAndExit(err)
+	}
+
+	fmt.Println(result)
+}
+
+func getHaystack(haystackType string) (haystack string) {
+	switch haystackType {
+	case "go":
+		haystack = getGoSrc()
+	case "work":
+		haystack = getWorkspace()
+	default:
+		printAndExit("-haystackType must be either go or work")
+	}
+
+	return haystack
+}
+
+func getGoSrc() string {
 	gopath := os.Getenv("GOPATH")
 
 	if gopath == "" {
 		printAndExit("GOPATH is not set")
 	}
 
-	haystack := filepath.Join(gopath, "src")
+	return filepath.Join(os.Getenv("GOPATH"), "src")
+}
 
-	installFilePtr := flag.String("install", "", "path to install Bash functions to")
-	flag.Parse()
-	installTo := *installFilePtr
+func getWorkspace() string {
+	home := os.Getenv("HOME")
 
-	if installTo != "" {
-		err := installer.Install(installTo)
-		if err != nil {
-			printAndExit(err)
-		}
-		fmt.Println("Added Bash functions to " + installTo)
-	} else {
-		if len(os.Args) < 2 {
-			printAndExit("directory to look for was not specified")
-		}
-		needle := os.Args[1]
-
-		result, err := dir.Find(needle, haystack)
-
-		if err != nil {
-			printAndExit(err)
-		}
-
-		fmt.Println(result)
+	if home == "" {
+		printAndExit("HOME is not set. This tool depends on Bash, and only works on Windows when using MinGW or equivalent.")
 	}
+
+	return filepath.Join(os.Getenv("HOME"), "workspace")
 }
 
 func printAndExit(message interface{}) {

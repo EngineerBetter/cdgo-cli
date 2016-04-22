@@ -32,10 +32,10 @@ var _ = Describe("installer", func() {
 		functions := `
 # https://github.com/EngineerBetter/cdgo
 function cdgo {
-  cd $(goto "$@")
+  cd $(goto go "$@")
 }
 function cdwork {
-  cd $(workto "$@")
+  cd $(goto work "$@")
 }
 `
 

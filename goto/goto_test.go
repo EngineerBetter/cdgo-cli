@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"os/user"
 	"path/filepath"
 )
 
@@ -30,21 +31,60 @@ var _ = Describe("goto", func() {
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit(1))
-		Ω(session.Err).Should(Say("directory to look for was not specified"))
+		Ω(session.Err).Should(Say("-needle must be provided"))
 	})
 
-	It("finds this directory", func() {
-		gopath := os.Getenv("GOPATH")
-		Ω(gopath).ShouldNot(BeZero())
+	Describe("switching to Go dirs", func() {
+		It("finds this directory", func() {
+			gopath := os.Getenv("GOPATH")
+			Ω(gopath).ShouldNot(BeZero())
 
-		command := exec.Command(cliPath, "cdgo")
-		session, err := Start(command, GinkgoWriter, GinkgoWriter)
-		Ω(err).ShouldNot(HaveOccurred())
-		Eventually(session).Should(Exit())
+			command := exec.Command(cliPath, "-needle=cdgo")
+			session, err := Start(command, GinkgoWriter, GinkgoWriter)
+			Ω(err).ShouldNot(HaveOccurred())
+			Eventually(session).Should(Exit(0))
 
-		expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo")
+			expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo")
+			Ω(session.Out).Should(Say(expectedOutput))
+		})
 
-		Ω(session.Out).Should(Say(expectedOutput))
+		It("fails if the directory can't be found", func() {
+			gopath := os.Getenv("GOPATH")
+			Ω(gopath).ShouldNot(BeZero())
+
+			command := exec.Command(cliPath, "-needle=does-not-exist")
+			session, err := Start(command, GinkgoWriter, GinkgoWriter)
+			Ω(err).ShouldNot(HaveOccurred())
+			Eventually(session).Should(Exit(1))
+		})
+	})
+
+	Describe("switching to Work dirs", func() {
+		var homeDir string
+		var testDir string
+
+		BeforeEach(func() {
+			var err error
+			cliPath, err = Build("github.com/EngineerBetter/cdgo/goto")
+			Ω(err).ShouldNot(HaveOccurred())
+
+			usr, err := user.Current()
+			Ω(err).ShouldNot(HaveOccurred())
+			homeDir = usr.HomeDir
+			testDir = filepath.Join(homeDir, "workspace", "goto-test-dir")
+			err = os.MkdirAll(testDir, 0777)
+			Ω(err).ShouldNot(HaveOccurred())
+		})
+
+		It("finds a test directory", func() {
+			command := exec.Command(cliPath, "-haystackType=work", "-needle=goto-test-dir")
+			session, err := Start(command, GinkgoWriter, GinkgoWriter)
+			Ω(err).ShouldNot(HaveOccurred())
+			Eventually(session).Should(Exit(0))
+
+			expectedOutput := testDir
+			Ω(session.Out).Should(Say(expectedOutput))
+		})
 	})
 
 	Describe("bash function installation", func() {
@@ -58,7 +98,7 @@ var _ = Describe("goto", func() {
 			command := exec.Command(cliPath, "-install="+tempFilePath)
 			session, err := Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
-			Eventually(session).Should(Exit())
+			Eventually(session).Should(Exit(0))
 			Ω(session.Out).Should(Say("Added Bash functions to " + tempFilePath))
 
 			bytesAfter, err := ioutil.ReadFile(tempFilePath)
@@ -67,13 +107,12 @@ var _ = Describe("goto", func() {
 			functions := `
 # https://github.com/EngineerBetter/cdgo
 function cdgo {
-  cd $(goto "$@")
+  cd $(goto go "$@")
 }
 function cdwork {
-  cd $(workto "$@")
+  cd $(goto work "$@")
 }
 `
-
 			stringAfter := string(bytesAfter[:])
 			Ω(stringAfter).Should(ContainSubstring(functions))
 		})

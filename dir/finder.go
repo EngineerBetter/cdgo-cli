@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-func Find(needle string, haystack string) (result string, errOut error) {
+func Find(needle string, haystack string, maxDepth int) (result string, errOut error) {
 	fi, err := os.Lstat(haystack)
 
 	if err != nil {
@@ -16,7 +16,7 @@ func Find(needle string, haystack string) (result string, errOut error) {
 		return result, errors.New(haystack + " is not a directory")
 	}
 
-	result = walk(haystack, needle)
+	result = walk(haystack, needle, maxDepth, 0)
 
 	if result == "" {
 		errOut = errors.New(needle + " not found in " + haystack)
@@ -25,7 +25,7 @@ func Find(needle string, haystack string) (result string, errOut error) {
 	return
 }
 
-func walk(path string, needle string) (result string) {
+func walk(path string, needle string, maxDepth int, currentDepth int) (result string) {
 	names, _ := readDirNames(path)
 	subdirs := make([]string, len(names))
 
@@ -42,10 +42,12 @@ func walk(path string, needle string) (result string) {
 		}
 	}
 
-	for _, subdir := range subdirs {
-		result = walk(subdir, needle)
-		if result != "" {
-			return result
+	if shouldDescend(maxDepth, currentDepth) {
+		for _, subdir := range subdirs {
+			result = walk(subdir, needle, maxDepth, currentDepth+1)
+			if result != "" {
+				return result
+			}
 		}
 	}
 
@@ -64,4 +66,8 @@ func readDirNames(dirname string) ([]string, error) {
 	}
 	sort.Strings(names)
 	return names, nil
+}
+
+func shouldDescend(maxDepth, currentDepth int) bool {
+	return maxDepth < 1 || currentDepth < maxDepth
 }

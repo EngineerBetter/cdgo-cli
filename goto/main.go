@@ -35,8 +35,8 @@ func doInstall(installTo string) {
 }
 
 func doFind(needle string, haystackType string) {
-	haystack := getHaystack(haystackType)
-	result, err := dir.Find(needle, haystack)
+	haystack, maxDepth := getHaystack(haystackType)
+	result, err := dir.Find(needle, haystack, maxDepth)
 
 	if err != nil {
 		printAndExit(err)
@@ -45,17 +45,19 @@ func doFind(needle string, haystackType string) {
 	fmt.Println(result)
 }
 
-func getHaystack(haystackType string) (haystack string) {
+func getHaystack(haystackType string) (haystack string, maxDepth int) {
 	switch haystackType {
 	case "go":
 		haystack = getGoSrc()
+		maxDepth = -1
 	case "work":
 		haystack = getWorkspace()
+		maxDepth = 1
 	default:
 		printAndExit("-haystackType must be either go or work")
 	}
 
-	return haystack
+	return
 }
 
 func getGoSrc() string {

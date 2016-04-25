@@ -32,6 +32,7 @@ func doInstall(installTo string) {
 		printAndExit(err)
 	}
 	fmt.Println("Added Bash functions to " + installTo)
+	fmt.Println("To load new functions: source " + installTo)
 }
 
 func doFind(needle string, haystackType string) {

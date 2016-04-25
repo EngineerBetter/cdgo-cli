@@ -32,12 +32,8 @@ var _ = Describe("bash", func() {
 
 			functions := `
 # https://github.com/EngineerBetter/cdgo
-function cdgo {
-  cd $(goto -needle="$@")
-}
-function cdwork {
-  cd $(goto -haystackType=work -needle="$@")
-}
+function cdgo { cd $(goto -needle="$@") ; }
+function cdwork { cd $(goto -haystackType=work -needle="$@") ; }
 `
 
 			err = bash.Install(tempFilePath)

@@ -33,12 +33,8 @@ func installBashFunctions(installTo string) error {
 	installFileContents := string(installFileBytes[:])
 	functions := `
 # https://github.com/EngineerBetter/cdgo
-function cdgo {
-  cd $(goto -needle="$@")
-}
-function cdwork {
-  cd $(goto -haystackType=work -needle="$@")
-}
+function cdgo { cd $(goto -needle="$@") ; }
+function cdwork { cd $(goto -haystackType=work -needle="$@") ; }
 `
 	if !strings.Contains(installFileContents, functions) {
 		f, err := os.OpenFile(installTo, os.O_APPEND|os.O_WRONLY, 0666)

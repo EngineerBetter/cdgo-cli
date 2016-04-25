@@ -9,5 +9,5 @@ import (
 
 func TestGoto(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Goto Suite")
+	RunSpecs(t, "cdgo-cli Suite")
 }

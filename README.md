@@ -17,7 +17,7 @@
 
 ### What does the install argument do?
 
-A child process can't change its parent's working directory, so this command appends two Bash functions to the given file. You can provide a different path to `goto -install` if you'd rather not use `.bashrc`.
+A child process can't change its parent's working directory, so this command appends two Bash functions to the given file. You can provide a different path to `-install` if you'd rather not use `.bashrc`.
 
 ## Waffle
 

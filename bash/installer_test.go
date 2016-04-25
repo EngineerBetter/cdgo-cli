@@ -31,7 +31,7 @@ var _ = Describe("bash", func() {
 			stringBefore := string(bytesBefore[:])
 
 			functions := `
-# https://github.com/EngineerBetter/cdgo
+# added by https://github.com/EngineerBetter/cdgo-cli
 function cdgo { cd $(cdgo-cli -needle="$@") ; }
 function cdwork { cd $(cdgo-cli -haystackType=work -needle="$@") ; }
 `

@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/EngineerBetter/cdgo/bash"
-	"github.com/EngineerBetter/cdgo/dir"
+	"github.com/EngineerBetter/cdgo-cli/bash"
+	"github.com/EngineerBetter/cdgo-cli/dir"
 	"os"
 	"path/filepath"
 )

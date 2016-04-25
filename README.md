@@ -1,6 +1,6 @@
 # cdgo
 
-[![Build Status](https://travis-ci.org/EngineerBetter/cdgo.svg?branch=master)](https://travis-ci.org/EngineerBetter/cdgo)
+[![Build Status](https://travis-ci.org/EngineerBetter/cdgo-cli.svg?branch=master)](https://travis-ci.org/EngineerBetter/cdgo-cli)
 
 `cd`s to nested directories in either `$GOPATH` and `~/workspace/`, which may be handy if you regularly work on both Go projects and projects written in other languages.
 
@@ -11,7 +11,7 @@
 
 ## Installation
 
-* `go get gopkg.in/EngineerBetter/cdgo.v3/goto` to get a stable version
+* `go get gopkg.in/EngineerBetter/cdgo-cli.v3` to get a stable version
 * `goto -install=$HOME/.bashrc` (see below)
 * `source $HOME/.bashrc` to start pick up the new functions
 

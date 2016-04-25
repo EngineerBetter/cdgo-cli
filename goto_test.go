@@ -17,7 +17,7 @@ var _ = Describe("goto", func() {
 
 	BeforeSuite(func() {
 		var err error
-		cliPath, err = Build("github.com/EngineerBetter/cdgo/goto")
+		cliPath, err = Build("github.com/EngineerBetter/cdgo-cli")
 		Ω(err).ShouldNot(HaveOccurred())
 	})
 
@@ -38,12 +38,12 @@ var _ = Describe("goto", func() {
 			gopath := os.Getenv("GOPATH")
 			Ω(gopath).ShouldNot(BeZero())
 
-			command := exec.Command(cliPath, "-needle=cdgo")
+			command := exec.Command(cliPath, "-needle=cdgo-cli")
 			session, err := Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
 			Eventually(session).Should(Exit(0))
 
-			expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo")
+			expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-cli")
 			Ω(session.Out).Should(Say(expectedOutput))
 		})
 
@@ -64,7 +64,7 @@ var _ = Describe("goto", func() {
 
 		BeforeEach(func() {
 			var err error
-			cliPath, err = Build("github.com/EngineerBetter/cdgo/goto")
+			cliPath, err = Build("github.com/EngineerBetter/cdgo-cli")
 			Ω(err).ShouldNot(HaveOccurred())
 
 			usr, err := user.Current()
@@ -104,11 +104,11 @@ var _ = Describe("goto", func() {
 			Eventually(session).Should(Exit(0))
 			Ω(session.Out).Should(Say("Added Bash functions to " + bashRcPath))
 
-			command = exec.Command("bash", "-c", "export PATH=$PATH:. && cd "+cliDir+" && source .bashrc && cdgo cdgo && pwd")
+			command = exec.Command("bash", "-c", "export PATH=$PATH:. && cd "+cliDir+" && source .bashrc && cdgo cdgo-cli && pwd")
 			session, err = Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
 			Eventually(session).Should(Exit(0))
-			expectedDir := filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "EngineerBetter", "cdgo")
+			expectedDir := filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "EngineerBetter", "cdgo-cli")
 			Ω(session.Out).Should(Say(expectedDir))
 		})
 	})

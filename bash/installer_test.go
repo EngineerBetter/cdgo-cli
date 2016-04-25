@@ -1,7 +1,7 @@
 package bash_test
 
 import (
-	"github.com/EngineerBetter/cdgo/bash"
+	"github.com/EngineerBetter/cdgo-cli/bash"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -32,8 +32,8 @@ var _ = Describe("bash", func() {
 
 			functions := `
 # https://github.com/EngineerBetter/cdgo
-function cdgo { cd $(goto -needle="$@") ; }
-function cdwork { cd $(goto -haystackType=work -needle="$@") ; }
+function cdgo { cd $(cdgo-cli -needle="$@") ; }
+function cdwork { cd $(cdgo-cli -haystackType=work -needle="$@") ; }
 `
 
 			err = bash.Install(tempFilePath)

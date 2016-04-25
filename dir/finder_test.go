@@ -1,7 +1,7 @@
 package dir_test
 
 import (
-	"github.com/EngineerBetter/cdgo/dir"
+	"github.com/EngineerBetter/cdgo-cli/dir"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 

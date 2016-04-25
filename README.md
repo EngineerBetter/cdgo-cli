@@ -13,7 +13,7 @@
 
 * `go get github.com/EngineerBetter/cdgo/goto`
 * `goto -install=$HOME/.bashrc` (see below)
-* `exec bash -l` to start a new session and pick up the new functions
+* `source $HOME/.bashrc` to start pick up the new functions
 
 ### What does the install argument do?
 

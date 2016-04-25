@@ -11,7 +11,7 @@
 
 ## Installation
 
-* `go get gopkg.in/EngineerBetter/cdgo-cli.v1` to get a stable version
+* `go get github.com/EngineerBetter/cdgo-cli`
 * `goto -install=$HOME/.bashrc` (see below)
 * `source $HOME/.bashrc` to start pick up the new functions
 

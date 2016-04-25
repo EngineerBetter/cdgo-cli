@@ -11,7 +11,7 @@
 
 ## Installation
 
-* `go get github.com/EngineerBetter/cdgo/goto`
+* `go get gopkg.in/EngineerBetter/cdgo.v3/goto` to get a stable version
 * `goto -install=$HOME/.bashrc` (see below)
 * `source $HOME/.bashrc` to start pick up the new functions
 

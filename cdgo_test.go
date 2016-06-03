@@ -78,7 +78,6 @@ var _ = Describe("goto", func() {
 
 		Context("when vendor is of no concern", func() {
 			It("finds this directory", func() {
-				gopath := os.Getenv("GOPATH")
 				Ω(gopath).ShouldNot(BeZero())
 
 				command := exec.Command(cliPath, "-needle=cdgo-cli")
@@ -92,7 +91,6 @@ var _ = Describe("goto", func() {
 		})
 
 		It("fails if the directory can't be found", func() {
-			gopath := os.Getenv("GOPATH")
 			Ω(gopath).ShouldNot(BeZero())
 
 			command := exec.Command(cliPath, "-needle=does-not-exist")
@@ -152,7 +150,7 @@ var _ = Describe("goto", func() {
 			session, err = Start(command, GinkgoWriter, GinkgoWriter)
 			Ω(err).ShouldNot(HaveOccurred())
 			Eventually(session).Should(Exit(0))
-			expectedDir := filepath.Join(os.Getenv("GOPATH"), "src", "github.com", "EngineerBetter", "cdgo-cli")
+			expectedDir := filepath.Join(gopath, "src", "github.com", "EngineerBetter", "cdgo-cli")
 			Ω(session.Out).Should(Say(expectedDir))
 		})
 	})

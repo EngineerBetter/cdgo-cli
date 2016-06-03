@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"os/user"
 	"path/filepath"
+	"strings"
 )
 
 var _ = Describe("goto", func() {
@@ -21,7 +22,12 @@ var _ = Describe("goto", func() {
 	BeforeSuite(func() {
 		var err error
 		gopath = os.Getenv("GOPATH")
-		cliPath, err = Build("github.com/EngineerBetter/cdgo-cli")
+		currentLocation, err := filepath.Abs(os.Args[0])
+		Ω(err).ShouldNot(HaveOccurred())
+		splitter := strings.Split(currentLocation, "github.com")
+		splitter = strings.Split(splitter[1], "/_test")
+		buildPath := filepath.Join("github.com", splitter[0])
+		cliPath, err = Build(buildPath)
 		Ω(err).ShouldNot(HaveOccurred())
 	})
 

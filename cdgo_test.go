@@ -13,10 +13,14 @@ import (
 )
 
 var _ = Describe("goto", func() {
-	var cliPath string
+	var (
+		cliPath string
+		gopath  string
+	)
 
 	BeforeSuite(func() {
 		var err error
+		gopath = os.Getenv("GOPATH")
 		cliPath, err = Build("github.com/EngineerBetter/cdgo-cli")
 		Ω(err).ShouldNot(HaveOccurred())
 	})
@@ -34,17 +38,51 @@ var _ = Describe("goto", func() {
 	})
 
 	Describe("switching to Go dirs", func() {
-		It("finds this directory", func() {
-			gopath := os.Getenv("GOPATH")
-			Ω(gopath).ShouldNot(BeZero())
+		Context("when there is a project in the root of GOPATH that contains the target dir within vendor", func() {
+			BeforeEach(func() {
+				newDirPath := filepath.Join(gopath, "src/cdgo-example/vendor/github.com/EngineerBetter/cdgo-example2")
+				err := os.MkdirAll(newDirPath, 0777)
+				Ω(err).ShouldNot(HaveOccurred())
+				newDirPath = filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-example2")
+				err = os.MkdirAll(newDirPath, 0777)
+				Ω(err).ShouldNot(HaveOccurred())
+			})
 
-			command := exec.Command(cliPath, "-needle=cdgo-cli")
-			session, err := Start(command, GinkgoWriter, GinkgoWriter)
-			Ω(err).ShouldNot(HaveOccurred())
-			Eventually(session).Should(Exit(0))
+			AfterEach(func() {
+				newDirPath := filepath.Join(gopath, "src/cdgo-example")
+				err := os.RemoveAll(newDirPath)
+				Ω(err).ShouldNot(HaveOccurred())
+				newDirPath = filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-example2")
+				err = os.RemoveAll(newDirPath)
+				Ω(err).ShouldNot(HaveOccurred())
+			})
 
-			expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-cli")
-			Ω(session.Out).Should(Say(expectedOutput))
+			It("finds this directory", func() {
+				Ω(gopath).ShouldNot(BeZero())
+
+				command := exec.Command(cliPath, "-needle=cdgo-example2")
+				session, err := Start(command, GinkgoWriter, GinkgoWriter)
+				Ω(err).ShouldNot(HaveOccurred())
+				Eventually(session).Should(Exit(0))
+
+				expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-example2")
+				Ω(session.Out).Should(Say(expectedOutput))
+			})
+		})
+
+		Context("when vendor is of no concern", func() {
+			It("finds this directory", func() {
+				gopath := os.Getenv("GOPATH")
+				Ω(gopath).ShouldNot(BeZero())
+
+				command := exec.Command(cliPath, "-needle=cdgo-cli")
+				session, err := Start(command, GinkgoWriter, GinkgoWriter)
+				Ω(err).ShouldNot(HaveOccurred())
+				Eventually(session).Should(Exit(0))
+
+				expectedOutput := filepath.Join(gopath, "src/github.com/EngineerBetter/cdgo-cli")
+				Ω(session.Out).Should(Say(expectedOutput))
+			})
 		})
 
 		It("fails if the directory can't be found", func() {

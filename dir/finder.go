@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 )
 
 func Find(needle string, haystack string, maxDepth int) (result string, errOut error) {
@@ -32,6 +33,10 @@ func walk(path string, needle string, maxDepth int, currentDepth int) (result st
 	for _, name := range names {
 		filename := filepath.Join(path, name)
 		fileInfo, _ := os.Lstat(filename)
+
+		if strings.Contains(filename, "/vendor/") {
+			continue
+		}
 
 		if fileInfo.IsDir() {
 			if fileInfo.Name() == needle {

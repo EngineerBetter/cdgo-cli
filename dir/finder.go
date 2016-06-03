@@ -41,9 +41,8 @@ func walk(path string, needle string, maxDepth int, currentDepth int) (result st
 		if fileInfo.IsDir() {
 			if fileInfo.Name() == needle {
 				return filename
-			} else {
-				subdirs = append(subdirs, filename)
 			}
+			subdirs = append(subdirs, filename)
 		}
 	}
 

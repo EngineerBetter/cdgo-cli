@@ -9,7 +9,7 @@
 
 ## Installation
 
-* `go get github.com/EngineerBetter/cdgo-cli`
+* `go get github.com/EngineerBetter/cdgo-cli` or [download a release](https://github.com/EngineerBetter/cdgo-cli/releases/latest) and save it in your `PATH` as `cdgo-cli`
 * `cdgo-cli -install=$HOME/.bashrc` (see below)
 * `source $HOME/.bashrc` to start pick up the new functions
 

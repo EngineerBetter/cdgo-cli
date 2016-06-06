@@ -11,7 +11,7 @@ jobs:
   public: true
   plan:
   - get: cdgo-cli
-    trigger: true
+    trigger: false
     passed: [test]
   - task: build
     file: cdgo-cli/ci/tasks/build.yml

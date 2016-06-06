@@ -1,7 +1,5 @@
 # cdgo
 
-[![Build Status](https://travis-ci.org/EngineerBetter/cdgo-cli.svg?branch=master)](https://travis-ci.org/EngineerBetter/cdgo-cli)
-
 `cd`s to nested directories in either `$GOPATH` and `~/workspace/`, which may be handy if you regularly work on both Go projects and projects written in other languages.
 
 ## Usage

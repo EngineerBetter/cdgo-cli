@@ -7,6 +7,8 @@
 * `cdgo some-project` to `cd` into a directory somewhere in `$GOPATH/src`
 * `cdwork some-other-project` to `cd` into a directory somewhere in `~/workspace`
 
+`cdgo` ignores any directories called `vendor`. If you'd like this to be optional behaviour, please raise a GitHub issue.
+
 ## Installation
 
 * `go get github.com/EngineerBetter/cdgo-cli` or [download a release](https://github.com/EngineerBetter/cdgo-cli/releases/latest) and save it in your `PATH` as `cdgo-cli`

@@ -21,6 +21,20 @@ jobs:
       tag: cdgo-cli/version
       tag_prefix: v
       globs: [build/cdgo-cli*]
+- name: test-prs
+  plan:
+  - get: pull-request
+    trigger: true
+  - put: pull-request
+    params:
+      path: pull-request
+      status: pending
+  - task: test
+    file: cdgo-cli/tasks/pr-test.yml
+  - put: pull-request
+    params:
+      path: pull-request
+      status: success
 
 resources:
 - name: cdgo-cli
@@ -28,9 +42,21 @@ resources:
   source:
     uri: https://github.com/EngineerBetter/cdgo-cli.git
     branch: master
+- name: pull-request
+  type: pull-request
+  source:
+    access_token: {{github-access-token}}
+    repo: EngineerBetter/cdgo-cli
 - name: cdgo-cli-release
   type: github-release
   source:
     user: EngineerBetter
     repository: cdgo-cli
     access_token: {{github-access-token}}
+
+
+resource_types:
+- name: pull-request
+  type: docker-image
+  source:
+    repository: jtarchie/pr

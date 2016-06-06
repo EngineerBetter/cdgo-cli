@@ -20,7 +20,7 @@ jobs:
       name: cdgo-cli/version
       tag: cdgo-cli/version
       tag_prefix: v
-      globs: [build/cdgo-cli]
+      globs: [build/cdgo-cli*]
 
 resources:
 - name: cdgo-cli

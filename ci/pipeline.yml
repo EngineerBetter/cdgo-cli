@@ -25,12 +25,28 @@ jobs:
   plan:
   - get: pull-request
     trigger: true
+    version: every
   - put: pull-request
     params:
       path: pull-request
       status: pending
   - task: test
-    file: cdgo-cli/tasks/pr-test.yml
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: cfmobile/ginkgo
+      inputs:
+      - name: pull-request
+        path: gopath/src/github.com/EngineerBetter/cdgo-cli
+      run:
+        path: gopath/src/github.com/EngineerBetter/cdgo-cli/ci/scripts/test
+    on_failure:
+      put: pull-request
+      params:
+        path: pull-request
+        status: failure
   - put: pull-request
     params:
       path: pull-request

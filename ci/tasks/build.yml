@@ -1,0 +1,11 @@
+platform: linux
+image_resource:
+  type: docker-image
+  source: {repository: cfmobile/ginkgo}
+inputs:
+- name: cdgo-cli
+  path: gopath/src/github.com/EngineerBetter/cdgo-cli
+run:
+  path: gopath/src/github.com/EngineerBetter/cdgo-cli/ci/scripts/build
+outputs:
+- name: build

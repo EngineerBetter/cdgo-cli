@@ -1,0 +1,7 @@
+#!/bin/bash
+set -xe
+
+export GOPATH=$PWD/gopath
+
+cd ${GOPATH}/src/github.com/EngineerBetter/cdgo-cli
+ginkgo -r -v

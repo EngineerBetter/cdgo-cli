@@ -1,5 +1,7 @@
 # cdgo
 
+![Build Status](http://ci.engineerbetter.com/api/v1/pipelines/cdgo-cli/jobs/test/badge)
+
 `cd`s to nested directories in either `$GOPATH` and `~/workspace/`, which may be handy if you regularly work on both Go projects and projects written in other languages.
 
 ## Usage

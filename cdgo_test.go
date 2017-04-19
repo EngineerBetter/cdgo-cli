@@ -36,7 +36,7 @@ var _ = Describe("goto", func() {
 		session, err := Start(command, GinkgoWriter, GinkgoWriter)
 		Ω(err).ShouldNot(HaveOccurred())
 		Eventually(session).Should(Exit(1))
-		Ω(session.Err).Should(Say("-needle must be provided"))
+		Ω(session.Err).Should(Say("-needle must be THIS WILL FAIL"))
 	})
 
 	Describe("switching to Go dirs", func() {
